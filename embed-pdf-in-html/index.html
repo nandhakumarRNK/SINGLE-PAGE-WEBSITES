@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/form.css" />
+    <title>How to Embed PDF File in HTML</title>
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <div class="phppot-container">
+        <h1>How to Embed PDF File in HTML</h1>
+        <div id="error-message" class="error" style="display: none;">Invalid PDF file. Please select a valid PDF file.</div>
+        <input type="file" id="pdf-input" class="row" accept=".pdf" onchange="loadPDF(this)">
+        
+
+        <div class="pdf-embed-container" id="pdf-header" style="display: none;">
+            <h2 id="pdf-filename">PDF File: <span id="filename"></span></h2>
+            <div id="pdf-embed"></div>
+        </div>
+    </div>
+
+    <script>
+        function loadPDF(input) {
+            var file = input.files[0];
+            var errorMessage = document.getElementById('error-message');
+            var pdfContainer = document.getElementById('pdf-embed');
+            var pdfHeader = document.getElementById('pdf-header');
+            var filenameSpan = document.getElementById('filename');
+            errorMessage.style.display = 'none';
+
+            if (file && file.type === 'application/pdf') {
+                var pdfPath = URL.createObjectURL(file);
+
+                var iframe = document.createElement('iframe');
+                iframe.src = pdfPath;
+                iframe.width = '100%';
+                iframe.height = '100%';
+                iframe.style.border = 'none';
+
+                pdfContainer.innerHTML = '';
+                pdfContainer.appendChild(iframe);
+
+                filenameSpan.textContent = file.name;
+
+                pdfContainer.style.display = 'block';
+                pdfHeader.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'block';
+                pdfContainer.style.display = 'none';
+                pdfHeader.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+
+</html>
